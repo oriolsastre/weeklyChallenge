@@ -13,6 +13,34 @@ function fen2string(posicioFEN){
     return posicio;
 }
 
+function taulellEscac(taulell, rei, color){
+    if(color==1){pecesRivals = {P:'p',C:'c',A:'a',T:'t',D:'d',R:'r'}}
+    else if(color == -1){pecesRivals = {P:'P',C:'C',A:'A',T:'T',D:'D',R:'R'}}
+
+    if(taulell[rei[0]+1][rei[1]+color]==pecesRivals.P || taulell[rei[0]-1][rei[1]+color]==pecesRivals.P){return true;}
+    for(let i=-1;i<2;i+=2){
+    for(let j=-1;j<2;j+=2){
+        if(taulell[(rei[0]+2)*i][(rei[1]+1)*j]==pecesRivals.C || taulell[(rei[0]+1)*i][(rei[1]+2)*j]==pecesRivals.C){return true;}
+    }
+    }
+    for(let i=-1;i<2;i++){
+    for(let j=-1;j<2;j++){
+        if(taulell[rei[0]+i][rei[1]+j]==pecesRivals.R){return true;}
+    }
+    }
+    for(let i=-1;i<2;i+=2){
+    for(let j=-1;j<2;j+=2){
+        var viaLliure=true;
+        var k=1;
+        while(viaLliure && k<8){
+            if(taulell[rei[0]+(k*i)][rei[1]+(k*j)] == pecesRivals.D || taulell[rei[0]+(k*i)][rei[1]+(k*j)] == pecesRivals.A){return false;}
+            else if(taulell[rei[0]+(k*i)][rei[1]+(k*j)] != '~'){viaLliure=false;}
+            k++;
+        }
+    }
+    }
+}
+
 function movimentValid(taulell, peca, moviment, fen=false){
     /*
     Majúscules blanques, minúscules negres
@@ -66,6 +94,8 @@ function movimentValid(taulell, peca, moviment, fen=false){
 
     //només hi pot haver un rei per banda
     if(pecesPosicio['R'].length>1 || pecesPosicio['r'].length>1){throw new Error('Només hi pot haver un rei per banda, per normativa.')}
+
+    if(taulellEscac(taulellArray,[pecesPosicio['R'][0].fila,pecesPosicio['R'][0].columna],1)){console.log("El rival està en escac");return false;}
 
     //la casella que vull moure ha d'estar al tauler.
     if(pecesPosicio[peca.charAt(0)].length == 0){console.log('La peça que vols moure no es troba al tauler.'); return false}
