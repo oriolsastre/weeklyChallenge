@@ -75,7 +75,7 @@ function movimentValid(taulell, peca, moviment, fen=false){
 
     const destiX = filaANum[moviment.charAt(0)];
     const destiY = moviment.charAt(1)-1;
-    const casellaDesti = taulellArray[destiX][destiY];
+    const casellaDesti = taulellArray[destiY][destiX];
 
     if((color == 1 && pecesB.includes(casellaDesti)) || (color == -1 && pecesN.includes(casellaDesti))){console.log("No pots capturar una peça pròpia"); return false;}
 
@@ -102,39 +102,40 @@ function movimentValid(taulell, peca, moviment, fen=false){
                         if(taulellArray[element.fila+dY][element.columna] === '~' && taulellArray[element.fila+(dY/2)][element.columna] === '~'){ambigu.numPeces++;ambigu.comentari = 'El peó ha avançat correctament.'}
                         else{console.log("El peó no es pot moure a una casella ocupada");return}
                     }else{console.log("El peó només pot avançar dues caselles des de la posició inicial, 2na o 7a fila per blanques i negres respectivament"); return}
-                }else{console.log("Els peons no es mouen així.");return}
+                }//else{console.log("Els peons no es mouen així.");return}
             }else if(peca.charAt(0).toLowerCase() == 'c'){
                 if((Math.abs(dX)==2 && Math.abs(dY)==1) || (Math.abs(dX)==1 && Math.abs(dY)==2)){
                     if(casellaDesti=="~"){ambigu.numPeces++;}
                     else if((color == 1 && pecesN.includes(casellaDesti)) || (color == -1 && pecesB.includes(casellaDesti))){console.log("Has capturat una peça rival amb el cavall.");}
-                    else{return;}
-                }else{return;}
+                    //else{return;}
+                }//else{return;}
             }else if(peca.charAt(0).toLowerCase() == 'a'){
                 if(Math.abs(dX)==Math.abs(dY)){
                     for(let i=1;i<Math.abs(dX);i++){
-                        if(taulellArray[element.fila + i*(Math.sign(dX))][element.columna+ i*(Math.sign(dY))] != '~'){return; break;}
+                        if(taulellArray[element.fila + i*(Math.sign(dY))][element.columna+ i*(Math.sign(dX))] != '~'){return; break;}
                     }
                     if(ambigu.numPeces!=-1){ambigu.numPeces++}
-                }else{console.log("L'alfil no es mou així.");return}
+                }//else{console.log("L'alfil no es mou així.");return}
             }else if(peca.charAt(0).toLowerCase() == 't'){
                 if((dX==0 && dY!=0) || (dX!=0 && dY==0)){
-                    for(let i=1;i<Math.abs(dX);i++){
-                        if(taulellArray[element.fila + i*(Math.sign(dX))][element.columna+ i*(Math.sign(dY))] != '~'){return; break;}
+                    dX == 0 ? dd=dY : dd=dX
+                    for(let i=1;i<Math.abs(dd);i++){
+                        if(taulellArray[element.fila + i*(Math.sign(dY))][element.columna+ i*(Math.sign(dX))] != '~'){return; break;}
                     }
                     if(ambigu.numPeces!=-1){ambigu.numPeces++}
-                }else{console.log("La torre no es mou així.");return}
+                }//else{console.log("La torre no es mou així.");return}
             }else if(peca.charAt(0).toLowerCase() == 'd'){
                 if((dX==0 && dY!=0) || (dX!=0 && dY==0) || Math.abs(dX)==Math.abs(dY)){
                     for(let i=1;i<Math.abs(dX);i++){
-                        if(taulellArray[element.fila + i*(Math.sign(dX))][element.columna+ i*(Math.sign(dY))] != '~'){return; break;}
+                        if(taulellArray[element.fila + i*(Math.sign(dY))][element.columna+ i*(Math.sign(dX))] != '~'){return; break;}
                     }
                     if(ambigu.numPeces!=-1){ambigu.numPeces++}
-                }else{console.log("La dama no es mou així.");return}
+                }//else{console.log("La dama no es mou així.");return}
             }else if(peca.charAt(0).toLowerCase() == 'r'){
                 if(Math.abs(dX)==1 || Math.abs(dY) == 1){
                     if(casellaDesti=="~"){ambigu.numPeces++;}
                     else if((color == 1 && pecesN.includes(casellaDesti)) || (color == -1 && pecesB.includes(casellaDesti))){console.log("Has capturat una peça rival amb el rei.");ambigu.numPeces++;}
-                    else{console.log("No pots capturar una peça pròpia.");return}
+                    //else{console.log("No pots capturar una peça pròpia.");return}
                 }else if(Math.abs(dX)==2 && dY==0){
                     //enroc! L'enroc és un moviment de rei
                     if(color == 1){
@@ -162,7 +163,7 @@ function movimentValid(taulell, peca, moviment, fen=false){
 
 
 let board = `~r~~~~~~~P~~~C~~c~R~~A~~~~~~~~~~~~~~~~~~~~~~~~~pppp~~~~~~~~~~~~~`
-let boardFEN = 'r1bqkbnr/p1pp3p/1pn1pPp1/8/8/5N2/PPPP1PPP/RNBQKB1R'
-console.log(movimentValid(boardFEN, 'R', 'g1', true))
+let boardFEN = 'r1bqkbnr/ppppp1pp/2n5/4Pp2/8/8/PPPP1PPP/RNBQKBNR'
+console.log(movimentValid(boardFEN, 'P', 'f6', true))
 
 //console.log(fen2string('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'))
