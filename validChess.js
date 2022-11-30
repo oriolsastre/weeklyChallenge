@@ -13,7 +13,7 @@ function fen2string(posicioFEN){
     return posicio;
 }
 
-function movimentValid(taulell, peca, moviment, fen=false, fen=false){
+function movimentValid(taulell, peca, moviment, fen=false){
     /*
     Majúscules blanques, minúscules negres
     P Peó   R Rei   D Dama  A Alfil     C Cavall    T Torre
