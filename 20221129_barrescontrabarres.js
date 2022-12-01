@@ -12,8 +12,5 @@ function verticalShalsh(barres){
     }
 }
 
-function stringEscape(s) {
-    return s ? s.replace(/\\/g,'\\\\') : s;
-}
-
-verticalShalsh(String.raw`//\///\\`)
+barres = String.raw`//\///\\`
+verticalShalsh(barres)
