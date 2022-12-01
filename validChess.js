@@ -16,16 +16,23 @@ function fen2string(posicioFEN){
 function taulellEscac(taulell, rei, color){
     if(color==1){pecesRivals = {P:'p',C:'c',A:'a',T:'t',D:'d',R:'r'}}
     else if(color == -1){pecesRivals = {P:'P',C:'C',A:'A',T:'T',D:'D',R:'R'}}
+    if(rei[1]+color >= 0 && rei[1]+color<8){
+        if(rei[0]+1>=0 && rei[0]+1<8){if(taulell[rei[0]+1][rei[1]+color]==pecesRivals.P){return true}}
+        if(rei[0]-1>=0 && rei[0]-1<8){if(taulell[rei[0]-1][rei[1]+color]==pecesRivals.P){return true}}
+    }
 
-    if(taulell[rei[0]+1][rei[1]+color]==pecesRivals.P || taulell[rei[0]-1][rei[1]+color]==pecesRivals.P){return true;}
     for(let i=-1;i<2;i+=2){
     for(let j=-1;j<2;j+=2){
-        if(taulell[(rei[0]+2)*i][(rei[1]+1)*j]==pecesRivals.C || taulell[(rei[0]+1)*i][(rei[1]+2)*j]==pecesRivals.C){return true;}
+        if((rei[0]+2)*i>=0 && (rei[0]+2)*i<8 && (rei[1]+1)*j>=0 && (rei[1]+1)*j<8){if(taulell[(rei[0]+2)*i][(rei[1]+1)*j]==pecesRivals.C){return true}}
+        if((rei[0]+1)*i>=0 && (rei[0]+1)*i<8 && (rei[0]+1)*i>=0 && (rei[0]+1)*i<8){if(taulell[(rei[0]+1)*i][(rei[1]+2)*j]==pecesRivals.C){return true}}
+        
     }
     }
     for(let i=-1;i<2;i++){
     for(let j=-1;j<2;j++){
+    if(rei[0]+i>=0 && rei[0]+i<8 && rei[1]+j>=0 && rei[1]+j<8){
         if(taulell[rei[0]+i][rei[1]+j]==pecesRivals.R){return true;}
+    }
     }
     }
     for(let i=-1;i<2;i+=2){
@@ -33,11 +40,33 @@ function taulellEscac(taulell, rei, color){
         var viaLliure=true;
         var k=1;
         while(viaLliure && k<8){
-            if(taulell[rei[0]+(k*i)][rei[1]+(k*j)] == pecesRivals.D || taulell[rei[0]+(k*i)][rei[1]+(k*j)] == pecesRivals.A){return false;}
-            else if(taulell[rei[0]+(k*i)][rei[1]+(k*j)] != '~'){viaLliure=false;}
+            if(rei[0]+(k*i)>=0 && rei[0]+(k*i)<8 && rei[1]+(k*j)>=0 && rei[1]+(k*j)<8){
+                if(taulell[rei[0]+(k*i)][rei[1]+(k*j)] == pecesRivals.D || taulell[rei[0]+(k*i)][rei[1]+(k*j)] == pecesRivals.A){return false;}
+                else if(taulell[rei[0]+(k*i)][rei[1]+(k*j)] != '~'){viaLliure=false;}
+            }
             k++;
         }
     }
+    }
+    for(let i=-1;i<2;i+=2){
+        viaLliure = true;
+        k=1;
+        while(viaLliure && k<8){
+            if(rei[0]+(k*i)>=0 && rei[0]+(k*i)<8){
+                if(taulell[rei[0]+(k*i)][rei[1]] == pecesRivals.D || taulell[rei[0]+(k*i)][rei[1]] == pecesRivals.T){return false;}
+                else if(taulell[rei[0]+(k*i)][rei[1]] != '~'){viaLliure=false;}
+            }
+            k++
+        }
+        viaLliure = true;
+        k=1;
+        while(viaLliure && k<8){
+            if(rei[1]+(k*i)>=0 && rei[1]+(k*i)<8){
+                if(taulell[rei[0]][rei[1]+(k*i)] == pecesRivals.D || taulell[rei[0]][rei[1]+(k*i)] == pecesRivals.T){return false;}
+                else if(taulell[rei[0]][rei[1]+(k*i)] != '~'){viaLliure=false;}
+            }
+            k++
+        }
     }
 }
 
@@ -95,7 +124,11 @@ function movimentValid(taulell, peca, moviment, fen=false){
     //només hi pot haver un rei per banda
     if(pecesPosicio['R'].length>1 || pecesPosicio['r'].length>1){throw new Error('Només hi pot haver un rei per banda, per normativa.')}
 
-    if(taulellEscac(taulellArray,[pecesPosicio['R'][0].fila,pecesPosicio['R'][0].columna],1)){console.log("El rival està en escac");return false;}
+    if(color == 1){
+        if(taulellEscac(taulellArray,[pecesPosicio['r'][0].fila,pecesPosicio['r'][0].columna],-1)){console.log("El rival està en escac");return false;}
+    }else{
+        if(taulellEscac(taulellArray,[pecesPosicio['R'][0].fila,pecesPosicio['R'][0].columna],1)){console.log("El rival està en escac");return false;}
+    }
 
     //la casella que vull moure ha d'estar al tauler.
     if(pecesPosicio[peca.charAt(0)].length == 0){console.log('La peça que vols moure no es troba al tauler.'); return false}
@@ -170,15 +203,23 @@ function movimentValid(taulell, peca, moviment, fen=false){
                     //enroc! L'enroc és un moviment de rei
                     if(color == 1){
                         if(element.fila==0 && element.columna == 4 && ((dX==2 && taulellArray[0][7]=='T') || (dX==-2 && taulellArray[0][0]=='T'))){
-                            if(dX==2 && taulellArray[0][5]=='~' && taulellArray[0][6]=='~'){console.log("Enroc curt correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
-                            else if(dX==-2 && taulellArray[0][3]=='~' && taulellArray[0][2]=='~' && taulellArray[0][1]=='~'){console.log("Enroc llarg correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
-                            else{console.log("No tens via lliure per fer enroc");return}
+                            if(dX==2 && taulellArray[0][5]=='~' && taulellArray[0][6]=='~'){
+                                if(taulellEscac(taulellArray,[0,4],1) || taulellEscac(taulellArray,[0,5],1) || taulellEscac(taulellArray,[0,6],1)){console.log("No pots enrocar en escac");return}
+                                else{console.log("Enroc curt correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
+                            }else if(dX==-2 && taulellArray[0][3]=='~' && taulellArray[0][2]=='~' && taulellArray[0][1]=='~'){
+                                if(taulellEscac(taulellArray,[0,4],1) || taulellEscac(taulellArray,[0,3],1) || taulellEscac(taulellArray,[0,2],1)){console.log("No pots enrocar en escac");return}
+                                else{console.log("Enroc llarg correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
+                            }else{console.log("No tens via lliure per fer enroc");return}
                         }
                     }else{
                         if(element.fila==7 && element.columna == 4 && ((dX==2 && taulellArray[7][7]=='t') || (dX==-2 && taulellArray[7][0]=='t'))){
-                            if(dX==2 && taulellArray[7][5]=='~' && taulellArray[7][6]=='~'){console.log("Enroc curt correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
-                            else if(dX==-2 && taulellArray[7][3]=='~' && taulellArray[7][2]=='~' && taulellArray[7][1]=='~'){console.log("Enroc llarg correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
-                            else{console.log("No tens via lliure per fer enroc");return}
+                            if(dX==2 && taulellArray[7][5]=='~' && taulellArray[7][6]=='~'){
+                                if(taulellEscac(taulellArray,[7,4],-1) || taulellEscac(taulellArray,[7,5],-1) || taulellEscac(taulellArray,[7,6],-1)){console.log("No pots enrocar en escac");return}
+                                else{console.log("Enroc curt correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
+                            }else if(dX==-2 && taulellArray[7][3]=='~' && taulellArray[7][2]=='~' && taulellArray[7][1]=='~'){
+                                if(taulellEscac(taulellArray,[7,4],-1) || taulellEscac(taulellArray,[7,3],-1) || taulellEscac(taulellArray,[7,2],-1)){console.log("No pots enrocar en escac");return}
+                                else{console.log("Enroc llarg correcte, sempre i quant el rei i la torre no s'han mogut anteriorment.");ambigu.numPeces++;}
+                            }else{console.log("No tens via lliure per fer enroc");return}
                         }
                     }
                 }
@@ -187,7 +228,12 @@ function movimentValid(taulell, peca, moviment, fen=false){
     })
     //if ambigu
     if(ambigu.numPeces==0){return false};
-    if(ambigu.numPeces>0){console.log(ambigu.comentari); return true;}
+    if(ambigu.numPeces>0){
+        
+        
+        console.log(ambigu.comentari);
+        return true;
+    }
 
 }
 
