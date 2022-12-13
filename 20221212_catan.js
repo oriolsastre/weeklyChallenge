@@ -52,8 +52,12 @@
     }
 })()*/
 
-var n = [6,9,-7,3,8,-1,-6,-7,5,-7,7,-7,-1,4,7,9];
-var m = [-1,8,-7,2];
+function compareNumbers(a, b) {
+    return a - b;
+}
+
+var n = [6,9,-7,3,8,-1,-6,-4,2,-7,7,-7,-1,4,7,9];
+var m = [7,-7,9,7];
 
 (function sumaRectangle(n,m){
     if(!Array.isArray(n) || !Array.isArray(m)){return console.log("Els paràmetres no són arrays.");}
@@ -62,8 +66,42 @@ var m = [-1,8,-7,2];
     var a = n.length**(1/2);
     if(!Number.isInteger(a)){return console.log("De moment el primer array ha de representar un quadrat. No és el cas")}
     var b = a;
-    
-
-
-
+    var cantonades = new Array(4).fill(new Array)
+    m.forEach((valor,index) => {
+        var indexes = [], i = -1;
+        while ((i = n.indexOf(valor, i+1)) != -1){
+            indexes.push(i);
+        }
+        cantonades[index] = indexes
+    })
+    var rectangleValid=new Array();
+    if(cantonades[0].length===0 || cantonades[1].length==0 || cantonades[2].length==0 || cantonades[3].length==0){return console.log("Vèrtexs no vàlids per a crear un rectangle.")}
+    cantonades[0].forEach(cantonada1 => {
+    cantonades[1].forEach(cantonada2 => {
+    cantonades[2].forEach(cantonada3 => {
+    cantonades[3].forEach(cantonada4 => {
+        var rectangle = new Array();
+        rectangle.push(cantonada1,cantonada2,cantonada3,cantonada4)
+        rectangle.sort(compareNumbers)
+        if(Math.floor(rectangle[0]/a) == Math.floor(rectangle[1]/a) && Math.floor(rectangle[2]/a) == Math.floor(rectangle[3]/a) && Math.floor(rectangle[0]/a) != Math.floor(rectangle[2]/a)){
+        if(rectangle[0]%b == rectangle[2]%b && rectangle[1]%b == rectangle[3]%b && rectangle[0]%b != rectangle[1]%b){
+            rectangleValid.push(rectangle);
+        }
+        }
+    })
+    })
+    })
+    })
+    if(rectangleValid.length == 0){return console.log("No s'ha trobat cap rectangle vàlid amb aquestes coordenades. No s'accepten rectangles d'alçada o amplada = 0")}
+    rectangleValid.forEach(rectangle => {
+        var suma = 0;
+        xMin=rectangle[0]%b;                xMax=rectangle[1]%b;
+        yMin=Math.floor(rectangle[0]/a);    yMax=Math.floor(rectangle[2]/a);
+        for(x=xMin;x<=xMax;x++){
+        for(y=yMin;y<=yMax;y++){
+            suma+=n[y*a+x];
+        }
+        }
+        console.log("La suma del rectangle és de "+suma)
+    })
 })(n,m)
