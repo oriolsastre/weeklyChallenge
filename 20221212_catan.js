@@ -1,4 +1,4 @@
-/*(function randomCatan(){
+(function randomCatan(){
     var hexagons = [2,3,3,4,4,5,5,6,6,8,8,9,9,'A','A','B','B','C','.'];
     const filesTauler = [3,4,5,4,3];
     var taulerArray = [[],[],[],[],[]]; 
@@ -50,14 +50,14 @@
     }else{
         randomCatan()
     }
-})()*/
+})()
 
 function compareNumbers(a, b) {
     return a - b;
 }
 
 var n = [6,9,-7,3,8,-1,-6,-4,2,-7,7,-7,-1,4,7,9];
-var m = [7,-7,9,7];
+var m = [8,-7,-4,2];
 
 (function sumaRectangle(n,m){
     if(!Array.isArray(n) || !Array.isArray(m)){return console.log("Els paràmetres no són arrays.");}
@@ -102,6 +102,6 @@ var m = [7,-7,9,7];
             suma+=n[y*a+x];
         }
         }
-        console.log("La suma del rectangle és de "+suma)
+        console.log("La suma dels valors dins del rectangle és de "+suma)
     })
 })(n,m)
