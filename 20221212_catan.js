@@ -52,10 +52,6 @@
     }
 })()
 
-function compareNumbers(a, b) {
-    return a - b;
-}
-
 var n = [6,9,-7,3,8,-1,-6,-4,2,-7,7,-7,-1,4,7,9];
 var m = [8,-7,-4,2];
 
@@ -82,7 +78,7 @@ var m = [8,-7,-4,2];
     cantonades[3].forEach(cantonada4 => {
         var rectangle = new Array();
         rectangle.push(cantonada1,cantonada2,cantonada3,cantonada4)
-        rectangle.sort(compareNumbers)
+        rectangle.sort((a,b)=>{return a-b})
         if(Math.floor(rectangle[0]/a) == Math.floor(rectangle[1]/a) && Math.floor(rectangle[2]/a) == Math.floor(rectangle[3]/a) && Math.floor(rectangle[0]/a) != Math.floor(rectangle[2]/a)){
         if(rectangle[0]%b == rectangle[2]%b && rectangle[1]%b == rectangle[3]%b && rectangle[0]%b != rectangle[1]%b){
             rectangleValid.push(rectangle);
