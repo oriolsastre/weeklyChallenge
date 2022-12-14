@@ -70,11 +70,11 @@ Fa el que es demana.
 
 ## Rectangle (20221212)
 ![Proposta](./img/rectangle.png)
-Fitxer: 20221212_catan.js
 
+    20221212_catan.js
     function sumaRectangle(n,m,a=0,b=0)
 
-`n` i `m` són el que demana. Opcionalment també es poden donar els paràmetres `a` i `b` que són les dimensions del rectangles que ha de tenir l'array n. Si no es mencionen s'assumeix que n és un quadrat i es tracta com a tal.
+`n` i `m` són el que demana. Opcionalment també es poden donar els paràmetres `a` i `b` que són les dimensions del rectangle que ha de tenir l'array `n`. Si no es mencionen s'assumeix que `n` és un quadrat i es tracta com a tal.
 
 Les cantonades a `m` no cal que estiguin en cap ordre, es busca qualsevol rectangle que contingui aquestes cantonades.
 
