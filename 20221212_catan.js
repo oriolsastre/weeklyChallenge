@@ -55,13 +55,15 @@
 var n = [6,9,-7,3,8,-1,-6,-4,2,-7,7,-7,-1,4,7,9];
 var m = [8,-7,-4,2];
 
-(function sumaRectangle(n,m){
+(function sumaRectangle(n,m,a=0,b=0){
     if(!Array.isArray(n) || !Array.isArray(m)){return console.log("Els paràmetres no són arrays.");}
     if(m.length!=4){return console.log("El segon array ha de ser de mida 4 representant les 4 cantonades d'un rectangle.")}
     
-    var a = n.length**(1/2);
-    if(!Number.isInteger(a)){return console.log("De moment el primer array ha de representar un quadrat. No és el cas")}
-    var b = a;
+    if(a===1 || b===1 || a<0 || b<0 || isNaN(a) || isNaN(b)){return console.log("Input de les dimensions del rectangle incorrectes.");}
+    if(a===0){a = n.length**(1/2);}
+    if(b===0){b = a;}
+    if(a*b !== n.length){return console.log(`L'array n no pot representar un rectangle de ${a}x${b}`)}
+    if(!Number.isInteger(a)){return console.log("Si no marques les dimensions el primer array ha de representar un quadrat. No és el cas")}
     var cantonades = new Array(4).fill(new Array)
     m.forEach((valor,index) => {
         var indexes = [], i = -1;
@@ -78,9 +80,9 @@ var m = [8,-7,-4,2];
     cantonades[3].forEach(cantonada4 => {
         var rectangle = new Array();
         rectangle.push(cantonada1,cantonada2,cantonada3,cantonada4)
-        rectangle.sort((a,b)=>{return a-b})
+        rectangle.sort((c,d)=>{return c-d})
         if(Math.floor(rectangle[0]/a) == Math.floor(rectangle[1]/a) && Math.floor(rectangle[2]/a) == Math.floor(rectangle[3]/a) && Math.floor(rectangle[0]/a) != Math.floor(rectangle[2]/a)){
-        if(rectangle[0]%b == rectangle[2]%b && rectangle[1]%b == rectangle[3]%b && rectangle[0]%b != rectangle[1]%b){
+        if(rectangle[0]%a == rectangle[2]%a && rectangle[1]%a == rectangle[3]%a && rectangle[0]%a != rectangle[1]%a){
             rectangleValid.push(rectangle);
         }
         }
@@ -91,7 +93,7 @@ var m = [8,-7,-4,2];
     if(rectangleValid.length == 0){return console.log("No s'ha trobat cap rectangle vàlid amb aquestes coordenades. No s'accepten rectangles d'alçada o amplada = 0")}
     rectangleValid.forEach(rectangle => {
         var suma = 0;
-        xMin=rectangle[0]%b;                xMax=rectangle[1]%b;
+        xMin=rectangle[0]%a;                xMax=rectangle[1]%a;
         yMin=Math.floor(rectangle[0]/a);    yMax=Math.floor(rectangle[2]/a);
         for(x=xMin;x<=xMax;x++){
         for(y=yMin;y<=yMax;y++){
