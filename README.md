@@ -82,3 +82,43 @@ No té output, hi ha console.log que mencionen el resultat de la suma ja que hi 
 
 ### No fa bé
 Si dues o més cantonades contenen el mateix nombre, es duplica el resultat.
+
+## Capital After Vowel (20230109)
+
+![Proposta](./img/capitalaftervowel.png)
+
+    20230109.js
+    function capitalAfterVowel(frase)
+
+Potser una mica lleig i poc eficient, però fa el que demana.
+
+## Sum Every Other
+
+![Proposta](./img/sumeveryother.png)
+
+    20230109.js
+    function sumEveryOther(nombre,parell=1)
+
+Per defecte suma els nombres parells, saltant-se els punts decimals. Si vols sumar els números senars potser definir el segon paràmetre com a 0.
+
+## Max subArray
+
+![Proposta](./img/maxsubarray.png)
+
+    20230109.js
+    function maxSubArray(m,n)
+
+Fa el que demana.
+
+## Replace zeros
+
+![Proposta](./img/replacezero.png)
+
+    20230109.js
+    function replaceZeros();
+
+Fa el que demana.
+
+### No fa
+
+Tenir en compte si a l'String hi ha caràcters no-numèrics
