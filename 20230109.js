@@ -5,8 +5,7 @@ function capitalAfterVowel(frase){
         let prevVocal = false;
         let resultat = new String;
 
-        for(i=0;i<frase.length;i++){
-            let caracter = frase.charAt(i);
+        for(let caracter of frase){
             if(vocals.includes(caracter.toLowerCase())){
                 prevVocal = true;
                 resultat+=caracter;
@@ -23,7 +22,7 @@ function capitalAfterVowel(frase){
         return resultat;
     }else{throw new Error("L'input no és un String")}
 }
-//console.log(capitalAfterVowel('A veure per on em falles. I, què men dius de vocals despres de comes?'));
+console.log(capitalAfterVowel('A veure per on em falles. I, què men dius de vocals despres de comes?'));
 
 function sumEveryOther(nombre,index=1){
     if(isNaN(nombre)){throw new Error("L'input ha de ser un número")}
@@ -62,8 +61,7 @@ function replaceZeros(stringNumeric){
     let prevZero = false;
     let numZero = 0;
     let resultat = new String();
-    for(i=0;i<stringNumeric.length;i++){
-        let char = stringNumeric.charAt(i);
+    for(let char of stringNumeric){
         if(char === '0'){prevZero=true;numZero++}
         else{
             if(prevZero){
