@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 
-const ruletaSize = 20;
+let ruletaSize = 20;
 let money = 100;
 let maxMoney = 500;
 let plays = 0;
