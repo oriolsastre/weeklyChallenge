@@ -122,3 +122,11 @@ Fa el que demana.
 ### No fa
 
 Tenir en compte si a l'String hi ha caràcters no-numèrics
+
+## Missing Bits (20230123)
+
+![Proposta](./img/missingBits.png)
+
+    20230123_missingBits.js
+
+Hi ha dues propostes, `missingBits()` i `missingBits2()`. Fan el mateix. Una amb un for, l'altre amb un while. missingBits no modifica l'array d'input, missingBits2 sí (amb els shifts). De fet, el buida. Els dos retornen un array amb les característiques indicades.
