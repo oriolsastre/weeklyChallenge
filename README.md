@@ -130,3 +130,11 @@ Tenir en compte si a l'String hi ha caràcters no-numèrics
     20230123_missingBits.js
 
 Hi ha dues propostes, `missingBits()` i `missingBits2()`. Fan el mateix. Una amb un for, l'altre amb un while. missingBits no modifica l'array d'input, missingBits2 sí (amb els shifts). De fet, el buida. Els dos retornen un array amb les característiques indicades.
+
+## Excel2Dec (20230206)
+
+![Proposta](./img/excel2dec.png)
+
+    20230206_excel2dec.js
+
+Fa el que demana. 
